@@ -33,12 +33,21 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     c.bally = c.bally + c.bdeltay;
-                    if(c.bally+c.ballh/2 > c.height){
-                        c.bdeltay *= -1;
-                    }
+//                    if(c.bally+c.ballh/2 > c.height){
+//                        c.bdeltay *= -1;
+//                    }
+                    if(c.bally> c.height){
+                        c.gameover=true;
+                    }else { c.gameover =false;}
                     if (c.bally+c.ballh<0)
                     {
                         c.bdeltay *= -1;
+                    }
+                    if(c.bally+c.ballh/2 >= c.taby && c.bally-c.ballh/2 <c.taby+c.tabh) {
+//
+                        if (c.ballx > c.tabx && c.ballx < (c.tabx + c.tabw)) {
+                            c.bdeltay *= -1;
+                        }
                     }
 
                     c.invalidate();

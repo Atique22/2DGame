@@ -8,6 +8,7 @@ import android.view.View;
 
 public class MyCanvas extends View {
 
+    boolean gameover = false;
     int ballx, bally, ballw, ballh, bdeltax, bdeltay;
     int tabx, taby, tabw, tabh;
 
@@ -27,6 +28,7 @@ public class MyCanvas extends View {
         taby =100;
         tabw =400;
         tabh =50;
+        gameover = false;
     }
 
     @Override
@@ -50,7 +52,8 @@ public class MyCanvas extends View {
 
         canvas.drawCircle(ballx,bally,ballw/2,red);
         canvas.drawRect(tabx,taby,tabx+tabw,taby+tabh,blue);
-        canvas.drawText("Hello: ",50, 50,textpaint);
+        if(gameover==true)
+            canvas.drawText("Game Over",50, 200,textpaint);
 
     }
 }
