@@ -16,10 +16,8 @@ public class MyCanvas extends View {
     int brx, bry, brw, brh;
 
     int width, height;
-
     public MyCanvas(Context context) {
         super(context);
-
         ballx = bally =100;
         ballw =100;
         ballh =100;
@@ -61,6 +59,9 @@ public class MyCanvas extends View {
         Paint textpaint = new Paint();
         textpaint.setColor(Color.CYAN);
 
+        Paint textgameover  = new Paint();
+        textgameover.setColor(Color.BLACK);
+
         Paint brickpaint = new Paint();
         brickpaint.setColor(Color.MAGENTA);
 
@@ -69,10 +70,11 @@ public class MyCanvas extends View {
         if(showbrick1==true)
             canvas.drawRect(brx,bry,brx+brw,bry+brh,brickpaint);
         textpaint.setTextSize(60);
+        textgameover.setTextSize(100);
         canvas.drawText("Score = "+score,50, 100,textpaint);
 
         if(gameover==true)
-            canvas.drawText("Game Over",50, 200,textpaint);
+            canvas.drawText("Game Over",100, 500,textgameover);
 
     }
 }

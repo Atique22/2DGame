@@ -8,13 +8,40 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.SensorPrivacyManager;
 import android.os.Bundle;
+import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class MainActivity extends AppCompatActivity {
+    boolean gameover2 = false;
 
+    private void showGameOverDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        try {
+            // Check for null objects
+            if (builder != null) {
+                builder.setTitle("Game Over");
+//                builder.setMessage("Score:"+c.score);
+                builder.setPositiveButton("OK", null);
+
+                // Show dialog on UI thread
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            // Handle exception here
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         MyCanvas c = new MyCanvas(getApplicationContext());
 
         SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -50,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(c);
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,10 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                     c.bally = c.bally + c.bdeltay;
-                    if(c.bally> c.height)
-                        c.gameover=true;
-                    else
-                        c.gameover =false;
+                    if(c.bally> c.height) {
+                        c.gameover = true;
+                        gameover2 = true;
+//                        if(gameover2 == true){
+//                            showGameOverDialog();
+//                        }
+                    } else {
+                        c.gameover = false;
+                    }
 
                     if (c.bally+c.ballh<0)
                         c.bdeltay *= -1;
@@ -100,5 +133,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         t.start();
+
     }
 }
