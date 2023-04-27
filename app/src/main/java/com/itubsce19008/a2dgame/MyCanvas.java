@@ -12,7 +12,7 @@ public class MyCanvas extends View {
     boolean showbrick1 = true;
     int score=0;
     int ballx, bally, ballw, ballh, bdeltax, bdeltay;
-    int tabx, taby, tabw, tabh;
+    int tabx, taby, tabw, tabh, tabdeltax, tabdeltay;
     int brx, bry, brw, brh;
 
     int width, height;
@@ -37,6 +37,9 @@ public class MyCanvas extends View {
         bry =600;
         brw =200;
         brh =100;
+
+        tabdeltax =0;
+        tabdeltay =0;
     }
 
     @Override

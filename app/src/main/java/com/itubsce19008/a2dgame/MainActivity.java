@@ -2,6 +2,11 @@ package com.itubsce19008.a2dgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.hardware.SensorPrivacyManager;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
@@ -12,18 +17,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MyCanvas c = new MyCanvas(getApplicationContext());
 
-        setContentView(c);
+        SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor accel = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        sm.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent){
+                float [] v= sensorEvent.values;
+                if(v[0]<-2) {
+                    if(c.tabdeltax + c.tabw < c.width)
+                        c.tabdeltax = 10;
+                    else
+                        c.tabdeltax =0;
+                }
+                if(v[0]>2) {
+                    if(c.tabx >10)
+                        c.tabdeltax = -10;
+                    else
+                        c.tabdeltax =0;
+                }
+                if(v[0]<2 && v[0]>-2) {
+                     c.tabdeltax =0;
+                }
+
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                // Handle changes to sensor accuracy, if needed
+            }
+        }, accel, sm.SENSOR_DELAY_GAME);
+
+
+        setContentView(c);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true){
                     try {
-                        Thread.sleep(42);
+                        Thread.sleep(25);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
 
+                    c.tabx = c.tabx+c.tabdeltax;
                     c.ballx = c.ballx + c.bdeltax;
                     if(c.ballx+c.ballw/2 > c.width)
                         c.bdeltax *= -1;
@@ -50,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     if(c.bally+c.ballh/2 >= c.bry && c.bally-c.ballh/2 < c.bry+c.brh) {
 
                         if (c.ballx > c.brx && c.ballx < (c.brx + c.brw)) {
-                            if(c.showbrick1 = true)
+                            if(c.showbrick1 == true)
                                 c.score+=10;
                             c.showbrick1 = false;
                         }
