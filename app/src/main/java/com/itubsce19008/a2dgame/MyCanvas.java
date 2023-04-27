@@ -9,8 +9,11 @@ import android.view.View;
 public class MyCanvas extends View {
 
     boolean gameover = false;
+    boolean showbrick1 = true;
+    int score=0;
     int ballx, bally, ballw, ballh, bdeltax, bdeltay;
     int tabx, taby, tabw, tabh;
+    int brx, bry, brw, brh;
 
     int width, height;
 
@@ -29,6 +32,11 @@ public class MyCanvas extends View {
         tabw =400;
         tabh =50;
         gameover = false;
+
+        brx =100;
+        bry =600;
+        brw =200;
+        brh =100;
     }
 
     @Override
@@ -50,8 +58,16 @@ public class MyCanvas extends View {
         Paint textpaint = new Paint();
         textpaint.setColor(Color.CYAN);
 
+        Paint brickpaint = new Paint();
+        brickpaint.setColor(Color.MAGENTA);
+
         canvas.drawCircle(ballx,bally,ballw/2,red);
         canvas.drawRect(tabx,taby,tabx+tabw,taby+tabh,blue);
+        if(showbrick1==true)
+            canvas.drawRect(brx,bry,brx+brw,bry+brh,brickpaint);
+        textpaint.setTextSize(60);
+        canvas.drawText("Score = "+score,50, 100,textpaint);
+
         if(gameover==true)
             canvas.drawText("Game Over",50, 200,textpaint);
 
