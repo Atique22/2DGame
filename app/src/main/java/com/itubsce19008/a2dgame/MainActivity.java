@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                     if(c.bally+c.ballh/2 >= c.taby && c.bally-c.ballh/2 < c.taby+c.tabh) {
 
                         if (c.ballx > c.tabx && c.ballx < (c.tabx + c.tabw)) {
+                            if( c.gameover==false)
+                                c.score+=1;
                             c.bdeltay *= -1;
                         }
                     }
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (c.ballx > c.brx && c.ballx < (c.brx + c.brw)) {
                             if(c.showbrick1 == true)
-                                c.score+=10;
+                                c.score+=20;
                             c.showbrick1 = false;
                         }
                     }
